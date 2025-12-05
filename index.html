@@ -48,19 +48,18 @@
 <h1>Зараз відкриється календар турнірів</h1>
 <p>Якщо нічого не сталося — натисни кнопку нижче:</p>
 
-<a id="openCal" class="btn">
-    📅 Відкрити календар вручну
+<a id="openCal" class="btn"
+   href="https://calendar.google.com/calendar/u/0?cid=75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com">
+    📅 Відкрити календар
 </a>
 
 <script>
-const calendarUrl = "webcal://calendar.google.com/calendar/ical/75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com/public/basic.ics";
+const calendarUrl = "https://calendar.google.com/calendar/u/0?cid=75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com";
 
-// Автоматична спроба через 1 секунду
-setTimeout(() => {
-    window.location.href = calendarUrl;
-}, 1000);
+// Миттєвий автоперехід
+window.location.href = calendarUrl;
 
-// Ручне відкриття по кліку
+// fallback-кнопка
 document.getElementById("openCal").addEventListener("click", function () {
     window.location.href = calendarUrl;
 });
