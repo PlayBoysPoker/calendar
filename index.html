@@ -3,10 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Додаємо календар PlayBoysPoker…</title>
-
-  <meta http-equiv="refresh"
-        content="0; URL=webcal://calendar.google.com/calendar/ical/75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com/public/basic.ics">
-
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -27,15 +23,33 @@
       display: inline-block;
     }
   </style>
+
+  <script>
+    const CAL_URL = 'webcal://calendar.google.com/calendar/ical/75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com/public/basic.ics';
+
+    function openCalendar() {
+      // одна й та сама функція і для автозапуску, і для кліку
+      window.location.href = CAL_URL;
+    }
+
+    window.addEventListener('load', function () {
+      // невелика затримка, щоб сторінка встигла відмалюватися
+      setTimeout(openCalendar, 500);
+    });
+  </script>
 </head>
 
 <body>
   <h1>Зараз відкриється календар турнірів</h1>
   <p>Якщо нічого не сталося — натисни кнопку:</p>
 
-  <a class="btn"
-     href="webcal://calendar.google.com/calendar/ical/75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com/public/basic.ics">
+  <a class="btn" href="#" onclick="openCalendar(); return false;">
     📅 Відкрити календар вручну
   </a>
+
+  <p style="margin-top:16px;font-size:14px;opacity:.7;">
+    Якщо і це не спрацює на компʼютері — у тебе може не бути програми, що відкриває <code>webcal</code>. 
+    У такому разі підпишися на календар із телефона.
+  </p>
 </body>
 </html>
