@@ -2,10 +2,41 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Додаємо календар турнірів PlayBoysPoker</title>
 
 <style>
+    :root {
+        /* базові розміри для десктопа */
+        --font-h1: 2.1rem;
+        --font-p: 1.2rem;
+        --font-btn: 1.3rem;
+        --btn-padding-y: 15px;
+        --btn-padding-x: 30px;
+    }
+
+    @media (max-width: 768px) {
+        /* телефон / невеликі екрани */
+        :root {
+            --font-h1: 1.9rem;
+            --font-p: 1.1rem;
+            --font-btn: 1.25rem;
+            --btn-padding-y: 14px;
+            --btn-padding-x: 26px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        /* дуже маленькі екрани */
+        :root {
+            --font-h1: 1.8rem;
+            --font-p: 1.05rem;
+            --font-btn: 1.2rem;
+            --btn-padding-y: 14px;
+            --btn-padding-x: 24px;
+        }
+    }
+
     body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         display: flex;
@@ -15,28 +46,38 @@
         min-height: 100vh;
         margin: 0;
         background: #ffffff;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
     }
+
     h1 {
-        font-size: 2rem;
-        text-align: center;
-        margin-bottom: 20px;
+        font-size: var(--font-h1);
+        margin: 0 0 18px;
+        line-height: 1.25;
     }
+
     p {
-        text-align: center;
-        font-size: 1.1rem;
-        margin-bottom: 30px;
+        font-size: var(--font-p);
+        margin: 0 0 28px;
+        line-height: 1.4;
+        max-width: 420px;
     }
+
     .btn {
-        font-size: 1.3rem;
-        padding: 15px 30px;
-        border-radius: 12px;
+        font-size: var(--font-btn);
+        padding: var(--btn-padding-y) var(--btn-padding-x);
+        border-radius: 999px;
         border: 2px solid #6b4cff;
         background: #f5f2ff;
         cursor: pointer;
         text-decoration: none;
         color: #1a1a1a;
         transition: 0.2s;
+        display: inline-block;
+        min-width: 230px;
     }
+
     .btn:hover {
         background: #e7e0ff;
     }
@@ -46,7 +87,7 @@
 <body>
 
 <h1>Зараз відкриється календар турнірів</h1>
-<p>Якщо нічого не сталося — натисни кнопку нижче:</p>
+<p>Якщо нічого не сталося — натисни кнопку нижче, і ми відкриємо календар вручну.</p>
 
 <a id="openCal" class="btn"
    href="https://calendar.google.com/calendar/u/0?cid=75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com">
@@ -54,13 +95,17 @@
 </a>
 
 <script>
-const calendarUrl = "https://calendar.google.com/calendar/u/0?cid=75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com";
+const calendarUrl =
+  "https://calendar.google.com/calendar/u/0?cid=75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com";
 
-// Миттєвий автоперехід
-window.location.href = calendarUrl;
+// Мікрозатримка 200 мс — як у версії, що працювала ідеально на iPhone
+setTimeout(() => {
+    window.location.href = calendarUrl;
+}, 200);
 
-// fallback-кнопка
-document.getElementById("openCal").addEventListener("click", function () {
+// Фолбек-кнопка — ручний запуск
+document.getElementById("openCal").addEventListener("click", function (e) {
+    e.preventDefault();
     window.location.href = calendarUrl;
 });
 </script>
