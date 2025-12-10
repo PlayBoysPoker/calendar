@@ -14,26 +14,6 @@
         --btn-padding-x: 30px;
     }
 
-    @media (max-width: 768px) {
-        :root {
-            --font-h1: 1.9rem;
-            --font-p: 1.1rem;
-            --font-btn: 1.25rem;
-            --btn-padding-y: 14px;
-            --btn-padding-x: 26px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        :root {
-            --font-h1: 1.8rem;
-            --font-p: 1.05rem;
-            --font-btn: 1.2rem;
-            --btn-padding-y: 14px;
-            --btn-padding-x: 24px;
-        }
-    }
-
     body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         display: flex;
@@ -44,22 +24,11 @@
         margin: 0;
         background: #ffffff;
         padding: 20px;
-        box-sizing: border-box;
         text-align: center;
     }
 
-    h1 {
-        font-size: var(--font-h1);
-        margin: 0 0 18px;
-        line-height: 1.25;
-    }
-
-    p {
-        font-size: var(--font-p);
-        margin: 0 0 28px;
-        line-height: 1.4;
-        max-width: 420px;
-    }
+    h1 { font-size: var(--font-h1); margin-bottom: 16px; }
+    p { font-size: var(--font-p); max-width: 420px; margin-bottom: 26px; }
 
     .btn {
         font-size: var(--font-btn);
@@ -67,44 +36,51 @@
         border-radius: 999px;
         border: 2px solid #6b4cff;
         background: #f5f2ff;
-        cursor: pointer;
         text-decoration: none;
         color: #1a1a1a;
-        transition: 0.2s;
         display: inline-block;
         min-width: 230px;
+        transition: 0.2s;
     }
-
-    .btn:hover {
-        background: #e7e0ff;
-    }
+    .btn:hover { background: #e7e0ff; }
 </style>
-
 </head>
+
 <body>
 
 <h1>Зараз відкриється календар турнірів</h1>
-<p>Якщо нічого не сталося — натисни кнопку нижче, і ми відкриємо календар вручну.</p>
+<p>Якщо автозапуск не спрацює — натисни кнопку нижче.</p>
 
-<a id="openCal" class="btn"
-   href="webcal://calendar.google.com/calendar/ical/75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com/public/basic.ics">
-    📅 Відкрити календар
-</a>
+<a id="openCal" class="btn" href="#">📅 Відкрити календар</a>
 
 <script>
-const calendarUrl =
-  "webcal://calendar.google.com/calendar/ical/75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com/public/basic.ics";
+// iPhone / iPad → webcal
+const iosLink =
+"webcal://calendar.google.com/calendar/ical/75f04e28dd99d355ab19acd8fa98f06791391069bd8443b71c62f69badc53a03%40group.calendar.google.com/public/basic.ics";
 
-// Авто-відкриття через ~0.9 секунди — як у версії, що працювала у тебе ідеально
+// Android / Windows → Google Calendar URL
+const defaultLink =
+"https://calendar.google.com/calendar/u/0?cid=NzVmMDRlMjhkZDk5ZDM1NWFiMTlhY2Q4ZmE5OGYwNjc5MTM5MTA2OWJkODQ0M2I3MWM2MmY2OWJhZGM1M2EwM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t";
+
+// Визначення ОС
+function detectCalendarUrl() {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod")) {
+        return iosLink;
+    }
+    return defaultLink;
+}
+
+const finalUrl = detectCalendarUrl();
+
+// Автозапуск через 500мс
 setTimeout(() => {
-    window.location.href = calendarUrl;
-}, 400);
+    window.location.href = finalUrl;
+}, 500);
 
-// Фолбек-кнопка — якщо автозапуск не спрацював
-document.getElementById("openCal").addEventListener("click", function (e) {
-    // даємо браузеру використати саме webcal:// з href
-    // e.preventDefault();  // МОЖНА не блокувати, щоб спрацював "нативний" клік
-});
+// Кнопка fallback
+document.getElementById("openCal").href = finalUrl;
+
 </script>
 
 </body>
